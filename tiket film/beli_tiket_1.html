@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beli Tiket: Inside Out 2 - Nonton Kuy XXI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Beli Tiket</h1>
+        <p>Pilih Jadwal dan Jumlah Tiket Anda</p>
+    </div>
+    <div class="container ticket-purchase-page">
+        <button onclick="history.back()" class="btn-back">← Kembali</button>
+        <div class="purchase-form-card">
+            <h2>Pesan Tiket Film: Inside Out 2</h2>
+            <div class="movie-info-summary">
+                <img src="images/Inside_Out_2_Poster_Indonesian.webp" alt="Poster Mini Film">
+                <div>
+                    <p><strong>Inside Out 2</strong></p>
+                    <p>Genre: Animasi, Komedi</p>
+                    <p>Durasi: 1 jam 36 menit</p>
+                </div>
+            </div>
+            <form action="tiket_saya.html" method="GET">
+                <div class="form-group">
+                    <label for="tanggal_tayang">Pilih Tanggal Tayang:</label>
+                    <input type="date" id="tanggal_tayang" name="tanggal_tayang" required>
+                    <input type="hidden" name="film_id" value="inside_out_2">
+                </div>
+                <div class="form-group">
+                    <label for="jam_tayang">Pilih Jam Tayang:</label>
+                    <select id="jam_tayang" name="jam_tayang" required>
+                        <option value="">-- Pilih Jam --</option>
+                        <option value="1300">13:00</option>
+                        <option value="1515">15:15</option>
+                        <option value="1730">17:30</option>
+                        <option value="1945">19:45</option>
+                        <option value="2200">22:00</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jenis_tiket">Jenis Tiket:</label>
+                    <select id="jenis_tiket" name="jenis_tiket">
+                        <option value="reguler" data-price="40000">Reguler (Rp 40.000)</option>
+                        <option value="premiere" data-price="75000">Premiere (Rp 75.000)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jumlah_tiket">Jumlah Tiket:</label>
+                    <input type="number" id="jumlah_tiket" name="jumlah_tiket" min="1" value="1" required>
+                </div>
+                <hr class="divider">
+                <div class="form-group">
+                    <label for="nama_lengkap">Nama Lengkap:</label>
+                    <input type="text" id="nama_lengkap" name="nama_lengkap" required placeholder="Nama sesuai KTP/ID">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Email untuk E-tiket">
+                </div>
+                <div class="total-harga">
+                    <h3>Total Pembayaran: <span id="display_total_harga">Rp 40.000</span></h3>
+                </div>
+                <button type="submit" class="btn-confirm-purchase">Lanjutkan Pembayaran</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <p>© 2025 Nonton Kuy XXI. Semua Hak Dilindungi.</p>
+    </div>
+    <script>
+        const jumlahTiketInput = document.getElementById('jumlah_tiket');
+        const jenisTiketSelect = document.getElementById('jenis_tiket');
+        const displayTotalHarga = document.getElementById('display_total_harga');
+        function updateTotalHarga() {
+            const jumlah = parseInt(jumlahTiketInput.value);
+            const hargaPerTiket = parseInt(jenisTiketSelect.options[jenisTiketSelect.selectedIndex].dataset.price);
+            const total = jumlah * hargaPerTiket;
+            displayTotalHarga.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+        jumlahTiketInput.addEventListener('input', updateTotalHarga);
+        jenisTiketSelect.addEventListener('change', updateTotalHarga);
+        updateTotalHarga();
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0');
+            let yyyy = today.getFullYear();
+            const minDate = yyyy + '-' + mm + '-' + dd;
+            document.getElementById('tanggal_tayang').setAttribute('min', minDate);
+        });
+    </script>
+</body>
+</html>
